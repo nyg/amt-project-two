@@ -5,13 +5,13 @@
 
     <groupId>io.swagger</groupId>
     <artifactId>swagger-spring</artifactId>
-    <packaging>jar</packaging>
-
     <name>swagger-spring</name>
     <version>1.0.0</version>
 
+    <packaging>jar</packaging>
+
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>13</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <springfox-version>2.9.2</springfox-version>
