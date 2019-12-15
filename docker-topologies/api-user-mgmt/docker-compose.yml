@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+    # Spring Boot server providing API endpoint
+    api-user-mgmt-server:
+        container_name: user-mgmt-server
+        build:
+            context: ../.. # root of the project
+            dockerfile: docker-images/api-user-mgmt-server/Dockerfile
+        ports:
+            - 8080:8080
+        depends_on:
+            - api-user-mgmt-db
+
+    # Database server
+    api-user-mgmt-db:
+        container_name: user-mgmt-db
+        image: mariadb:10.4
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: user-mgmt
+        ports:
+            - 3306:3306
+
+    # PHPMyAdmin for eventual debugging
+    phpmyadmin:
+        container_name: user-mgmt-phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=api-user-mgmt-db
+        ports:
+            - 8888:80
