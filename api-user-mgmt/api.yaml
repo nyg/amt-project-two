@@ -1,51 +1,119 @@
 swagger: '2.0'
 info:
-  version: '0.1.0'
-  title: Fruits API
-  description: An API to demonstrate Swagger and Spring Boot
+  version: '1.0.0'
+  title: User Management API
+  description: API to manage users
+  termsOfService: none
+  contact:
+    name: Nikolaos Garanis, Samuel Mettler
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
 host: localhost:8080
 basePath: /api
 schemes:
   - http
 paths:
-  /fruits:
+  /public/authenticate:
     post:
-      description: create a fruit
-      operationId: createFruit
+      tags:
+        - public
+      summary: Authenticate user.
+      description: Allows a user to authentication itself.
       consumes:
         - application/json
       parameters:
-        - name: fruit
+        - name: identifiers
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Fruit'
+            $ref: '#/definitions/identifiers'
       responses:
-        '201':
-          description: created
+        200:
+          description: User is authenticated.
           schema:
-            type: object
-    get:
-      description: get the list of all fruits
-      operationId: getFruits
-      produces:
+            $ref: '#/definitions/token'
+        401:
+          description: Wrong authentication values.
+  /private/password:
+    put:
+      tags:
+        - private
+      summary: Update a user password.
+      description: Allows a user to modify his own password.
+      consumes:
         - application/json
-      responses:
-        '200':
-          description: success
+      parameters:
+        - name: password
+          in: body
+          required: true
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Fruit'
+            $ref: '#/definitions/password'
+      responses:
+        200:
+          description: Password updated.
+  /admin/users:
+    post:
+      tags:
+        - admin
+      summary: Create a user account.
+      description: Allows an admin to create a new user account.
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+      responses:
+        201:
+          description: User created.
+        401:
+          description: Admin not authentified.
+        409:
+          description: User already exists.
 definitions:
-  Fruit:
+  identifiers:
     type: object
+    required:
+      - email
+      - password
     properties:
-      kind:
+      email:
+        $ref: '#/definitions/email'
+      password:
+        $ref: '#/definitions/password'
+  user:
+    allOf:
+      - $ref: '#/definitions/identifiers'
+      - type: object
+        required:
+          - firstName
+          - lastName
+          - blocked
+          - role
+    properties:
+      email:
+        $ref: '#/definitions/email'
+      firstName:
         type: string
-      colour:
+      lastName:
         type: string
-      size:
+      password:
+        $ref: '#/definitions/password'
+      blocked:
+        type: boolean
+      role:
         type: string
-      weight:
+  password:
+    type: string
+  email:
+    type: string
+  token:
+    type: object
+    required:
+      - token
+    properties:
+      value:
         type: string
