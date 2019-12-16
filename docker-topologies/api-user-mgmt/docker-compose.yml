@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     # Spring Boot server providing API endpoint
-    api-user-mgmt-server:
+    user-mgmt-server:
         container_name: user-mgmt-server
         build:
             context: ../.. # root of the project
@@ -9,15 +9,22 @@ services:
         ports:
             - 8080:8080
         depends_on:
-            - api-user-mgmt-db
+            - user-mgmt-db
+        # TODO spring boot start before db and crashes
+        restart: on-failure
 
     # Database server
-    api-user-mgmt-db:
+    user-mgmt-db:
         container_name: user-mgmt-db
         image: mariadb:10.4
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: user-mgmt
+            # necessary when using volumes?
+            MYSQL_USER: api
+            MYSQL_PASSWORD: api
+        volumes:
+            - ../../api-user-mgmt/db/init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - 3306:3306
 
@@ -26,6 +33,6 @@ services:
         container_name: user-mgmt-phpmyadmin
         image: phpmyadmin/phpmyadmin
         environment:
-            - PMA_HOST=api-user-mgmt-db
+            - PMA_HOST=user-mgmt-db
         ports:
             - 8888:80
