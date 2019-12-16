@@ -1,4 +1,4 @@
-package io.avalia.fruits.api.endpoints;
+package io.avalia.fruits.api.endpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.avalia.fruits.api.AdminApi;
@@ -17,16 +17,16 @@ import javax.validation.Valid;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-15T00:41:05.824Z")
 
 @Controller
-public class AdminApiController implements AdminApi {
+public class AdminController implements AdminApi {
 
-    private static final Logger log = LoggerFactory.getLogger(AdminApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public AdminApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public AdminController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }

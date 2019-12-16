@@ -17,12 +17,12 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Fruits API")
-            .description("An API to demonstrate Swagger and Spring Boot")
-            .license("")
-            .licenseUrl("http://unlicense.org")
+            .title("User Management API")
+            .description("API to manage users")
+            .license("MIT")
+            .licenseUrl("http://opensource.org/licenses/MIT")
             .termsOfServiceUrl("")
-            .version("0.1.0")
+            .version("1.0.0")
             .contact(new Contact("","", ""))
             .build();
     }
