@@ -1,51 +1,180 @@
 swagger: '2.0'
 info:
-  version: '0.1.0'
-  title: Fruits API
-  description: An API to demonstrate Swagger and Spring Boot
+  version: '1.0.0'
+  title: Online Shop API
+  description: API to browse a shop, add items to cart and edit them, add new articles
+  termsOfService: none
+  contact:
+    name: Nikolaos Garanis, Samuel Mettler
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
 host: localhost:8080
 basePath: /api
 schemes:
   - http
 paths:
-  /fruits:
-    post:
-      description: create a fruit
-      operationId: createFruit
-      consumes:
-        - application/json
-      parameters:
-        - name: fruit
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/Fruit'
-      responses:
-        '201':
-          description: created
-          schema:
-            type: object
+  /articles:
     get:
-      description: get the list of all fruits
-      operationId: getFruits
-      produces:
-        - application/json
+      tags:
+        - public
+      summary: Browse article.
+      description: Allows a user to browse the complete list of articles available.
       responses:
-        '200':
-          description: success
+        200:
+          description: Success.
           schema:
             type: array
             items:
-              $ref: '#/definitions/Fruit'
+              $ref: '#/definitions/article'
+
+  /article:
+    post:
+      tags:
+        - private
+      summary: Create an article
+      description : Allows an admin to create a new articles
+      consumes:
+        - application/json
+      parameters:
+        - name : article
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/article'
+      responses:
+        201:
+          description: created
+          schema :
+            $ref: '#/definitions/article'
+    put:
+      tags:
+        - private
+      summary: Edit an article
+      description : Allows an admin to edit an article
+      consumes:
+        - application/json
+      parameters:
+        - name : article
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/article'
+      responses:
+        200:
+          description: updated
+          schema:
+            $ref: '#/definitions/article'
+    delete:
+      tags:
+        - private
+      summary: Delete an article
+      description: Allows an admin to delete an article
+      responses:
+        200:
+          description : deleted
+  /customer:
+    put:
+      tags:
+        - private
+      summary: Update customer information
+      description: Allow a user to update its information
+      consumes:
+        - application/json
+      parameters:
+        - name: customer
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/customer'
+      responses:
+        200:
+          description: updated
+          schema:
+            $ref: '#/definitions/customer'
+  /cart:
+    put:
+      tags:
+        - private
+      summary: Update articles in cart
+      description: Allow any user to add articles to his cart
+      consumes:
+        - application/json
+      parameters:
+        - name: article
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/article'
+      responses:
+        200:
+          description: updated
+          schema:
+            $ref: '#/definitions/article'
+    delete:
+      tags:
+        - private
+      summary: Delete article from cart
+      description: Allow any user to delete an article from his cart
+      consumes:
+        - application/json
+      parameters:
+        - name: article
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/article'
+      responses:
+        200:
+          description: deleted
+
 definitions:
-  Fruit:
+  article:
     type: object
+    required:
+      - id
+      - name
+      - price
+      - description
     properties:
-      kind:
+      id:
+        type: integer
+      name:
         type: string
-      colour:
+      price:
+        type: number
+      description:
         type: string
-      size:
+
+  customer:
+    type: object
+    required:
+      - email
+      - firstName
+      - lastName
+    properties:
+      email:
         type: string
-      weight:
+      firstName:
         type: string
+      lastName:
+        type: string
+      address:
+        type: object
+        required:
+          - street
+          - number
+          - city
+          - ZIP
+          - country
+        properties:
+          street:
+            type: string
+          number:
+            type: integer
+          city:
+            type: string
+          ZIP:
+            type: integer
+          country:
+            type: string
