@@ -38,4 +38,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiError> handleInactiveException() {
         return new ResponseEntity<>(ApiError.INACTIVE, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiError> handleUserNotFoundException() {
+        return new ResponseEntity<>(ApiError.USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
+    }
 }

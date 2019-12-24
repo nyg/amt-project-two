@@ -14,12 +14,12 @@ The objectives of this project is to design, specify, implement and validate **2
   * Every account has at least an e-mail (used as the primary ID), a first name, a last name and a password. 
   * The API must also allow the user to change its password. 
   * A user cannot change the password of someone else.
-  * The API also exposes an endpoint to authenticate a user: it returns a JWT token if the provided credentials are correct.
+  * ~~The API also exposes an endpoint to authenticate a user: it returns a JWT token if the provided credentials are correct.~~
   * Specify, implement and validate at least one of these features:
-    * Only a user with an ADMIN role can create accounts.
+    * ~~Only a user with an ADMIN role can create accounts.~~
     * A user with an ADMIN role can block/unblock a user account; when blocked, the user cannot login. Be mindful of JWT tokens.
-    * A user needs to prove that he owns the e-mail address (by receiving an e-mail with a code).
-    * A user can ask to reset his password, which is done via e-mail (typical reset password).
+    * ~~A user needs to prove that he owns the e-mail address (by receiving an e-mail with a code).~~
+    * ~~A user can ask to reset his password, which is done via e-mail (typical reset password).~~
 * Like in the first project, **expose at least 3 entities through a second REST API** (one of them capturing the relationship between the two others; for instance, *Membership* would capture the relationship between *Person* and *Group*). You can use the same entities that you used in the first project, but do not have to.
   * The REST API must support CRUD operations on the 2 main entities; you have to specify what is the intended behavior when you delete an entity.
   * The REST API must provide a way to associate/de-associate a pair of two main entities.

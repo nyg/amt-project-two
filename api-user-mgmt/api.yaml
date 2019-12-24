@@ -17,9 +17,10 @@ paths:
   /public/authenticate:
     post:
       tags:
-        - public
+        - Public
+      operationId: authenticateUser
       summary: Authenticate user.
-      description: Allows a user to authentication itself.
+      description: Allows a user to authentication himself.
       consumes:
         - application/json
       parameters:
@@ -34,30 +35,32 @@ paths:
           schema:
             $ref: '#/definitions/token'
         401:
-          description: Wrong authentication values.
-  /private/password:
+          description: Authentication failed (e.g. wrong identifiers, inactive account).
+  /private/user:
     put:
       tags:
-        - private
-      summary: Update a user password.
-      description: Allows a user to modify his own password.
+        - Private
+      operationId: updateUser
+      summary: Update user information.
+      description: Allows a user to modify his account detail.
       consumes:
         - application/json
       parameters:
-        - name: password
+        - name: user
           in: body
           required: true
           schema:
-            $ref: '#/definitions/password'
+            $ref: '#/definitions/optionalUser'
       responses:
         200:
-          description: Password updated.
-  /admin/users:
+          description: Account updated.
+  /public/users:
     post:
       tags:
-        - admin
+        - Public
+      operationId: createUser
       summary: Create a user account.
-      description: Allows an admin to create a new user account.
+      description: Allows anybody to register a new user account.
       consumes:
         - application/json
       parameters:
@@ -69,8 +72,6 @@ paths:
       responses:
         201:
           description: User created.
-        401:
-          description: Admin not authentified.
         409:
           description: User already exists.
 definitions:
@@ -84,31 +85,46 @@ definitions:
         $ref: '#/definitions/email'
       password:
         $ref: '#/definitions/password'
-  user:
-    allOf:
-      - $ref: '#/definitions/identifiers'
-      - type: object
-        required:
-          - firstName
-          - lastName
-          - blocked
-          - role
+  optionalUser:
+    type: object
     properties:
       email:
         $ref: '#/definitions/email'
+      password:
+        $ref: '#/definitions/password'
       firstName:
         type: string
       lastName:
         type: string
+      active:
+        type: boolean
+      admin:
+        type: boolean
+  user:
+    type: object
+    required:
+      - email
+      - password
+      - firstName
+      - lastName
+      - active
+      - admin
+    properties:
+      email:
+        $ref: '#/definitions/email'
       password:
         $ref: '#/definitions/password'
-      blocked:
-        type: boolean
-      role:
+      firstName:
         type: string
-  password:
-    type: string
+      lastName:
+        type: string
+      active:
+        type: boolean
+      admin:
+        type: boolean
   email:
+    type: string
+  password:
     type: string
   token:
     type: object

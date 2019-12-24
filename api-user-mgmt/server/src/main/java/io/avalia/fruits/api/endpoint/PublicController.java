@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.avalia.fruits.api.PublicApi;
 import io.avalia.fruits.api.exception.AuthenticationException;
 import io.avalia.fruits.api.exception.InactiveException;
+import io.avalia.fruits.api.exception.UserCreationException;
 import io.avalia.fruits.api.model.Identifiers;
 import io.avalia.fruits.api.model.Token;
+import io.avalia.fruits.api.model.User;
 import io.avalia.fruits.entity.UserEntity;
 import io.avalia.fruits.repository.UserRepository;
 import io.avalia.fruits.service.AuthenticationService;
+import io.avalia.fruits.service.ValidationService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +38,9 @@ public class PublicController implements PublicApi {
     @Autowired
     AuthenticationService authenticationService;
 
+    @Autowired
+    ValidationService validationService;
+
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
 
@@ -44,7 +50,7 @@ public class PublicController implements PublicApi {
         this.request = request;
     }
 
-    public ResponseEntity<Token> publicAuthenticatePost(@ApiParam(value = "", required = true) @Valid @RequestBody Identifiers identifiers) throws AuthenticationException {
+    public ResponseEntity<Token> authenticateUser(@ApiParam(value = "", required = true) @Valid @RequestBody Identifiers identifiers) throws AuthenticationException {
 
         @NotNull String email = identifiers.getEmail();
         @NotNull String password = identifiers.getPassword();
@@ -65,5 +71,30 @@ public class PublicController implements PublicApi {
         Token token = new Token();
         token.setToken(authenticationService.generateToken(user.getEmail(), user.isAdmin()));
         return new ResponseEntity<>(token, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> createUser(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
+
+        if (!validationService.email(user.getEmail())) {
+            throw new UserCreationException("Incorrect email");
+        }
+
+        if (!validationService.password(user.getPassword())) {
+            throw new UserCreationException("Incorrect password");
+        }
+
+        Optional<UserEntity> currentEntity = userRepository.findById(user.getEmail());
+        if (currentEntity.isPresent()) {
+            throw new UserCreationException("Email already taken");
+        }
+
+        UserEntity entity = new UserEntity(user);
+
+        // hash password
+        entity.setPassword(authenticationService.hashPassword(entity.getPassword()));
+
+        userRepository.save(entity);
+
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 }

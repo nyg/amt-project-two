@@ -1,5 +1,7 @@
 package io.avalia.fruits.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 public interface AuthenticationService {
 
     String hashPassword(String password);
@@ -7,4 +9,6 @@ public interface AuthenticationService {
     boolean verify(String plainText, String hash);
 
     String generateToken(String email, boolean admin);
+
+    DecodedJWT verifyToken(String token);
 }

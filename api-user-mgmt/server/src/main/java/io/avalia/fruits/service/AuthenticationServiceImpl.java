@@ -1,8 +1,11 @@
 package io.avalia.fruits.service;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -55,6 +58,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .sign(algorithm);
         }
         catch (JWTCreationException e) {
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public DecodedJWT verifyToken(String token) {
+
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256("secret")).build();
+            return verifier.verify(token);
+        }
+        catch (JWTVerificationException e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }

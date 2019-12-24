@@ -16,6 +16,7 @@ public class ApiError {
     public static final ApiError AUTHENTICATION = new ApiError("Authentication failed");
     public static final ApiError INACTIVE = new ApiError("Inactive account");
     public static final ApiError NOT_FOUND = new ApiError("Path not found");
+    public static final ApiError USER_NOT_FOUND = new ApiError("User not found");
 
     private String message;
 
