@@ -43,4 +43,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiError> handleUserNotFoundException() {
         return new ResponseEntity<>(ApiError.USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UserCreationException.class)
+    public ResponseEntity<ApiError> handleUserCreationException(UserCreationException e) {
+        return new ResponseEntity<>(new ApiError(e.getMessage()), HttpStatus.CONFLICT);
+    }
 }
