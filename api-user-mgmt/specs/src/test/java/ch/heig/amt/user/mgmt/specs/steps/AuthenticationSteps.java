@@ -37,11 +37,18 @@ public class AuthenticationSteps {
         assertNotNull(api);
     }
 
-    @Given("^I have an identifier payload$")
-    public void i_have_an_identifier_payload() {
+    @Given("^I have a valid identifier payload$")
+    public void i_have_a_valid_identifier_payload() {
         identifiers = new Identifiers();
         identifiers.setEmail("admin@amt.ch");
         identifiers.setPassword("mypwd");
+    }
+
+    @Given("^I have an invalid identifier payload$")
+    public void i_have_an_invalid_identifier_payload() {
+        identifiers = new Identifiers();
+        identifiers.setEmail("admin@amt.ch");
+        identifiers.setPassword("incorrectpwd");
     }
 
     @When("^I POST it to the /api/public/authenticate endpoint$")
@@ -61,7 +68,7 @@ public class AuthenticationSteps {
     }
 
     @Then("^I receive a (\\d+) status code$")
-    public void i_receive_a_status_code(int arg1) throws Throwable {
-        assertEquals(200, lastStatusCode);
+    public void i_receive_a_status_code(int statusCode) {
+        assertEquals(statusCode, lastStatusCode);
     }
 }
