@@ -1,13 +1,13 @@
-package io.avalia.fruits.api.spec.steps;
+package ch.heig.amt.user.mgmt.specs.steps;
 
+import ch.heig.amt.user.mgmt.ApiException;
+import ch.heig.amt.user.mgmt.ApiResponse;
+import ch.heig.amt.user.mgmt.api.PublicApi;
+import ch.heig.amt.user.mgmt.api.dto.Identifiers;
+import ch.heig.amt.user.mgmt.specs.helpers.Environment;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.avalia.fruits.ApiException;
-import io.avalia.fruits.ApiResponse;
-import io.avalia.fruits.api.PublicApi;
-import io.avalia.fruits.api.dto.Identifiers;
-import io.avalia.fruits.api.spec.helpers.Environment;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -29,7 +29,7 @@ public class AuthenticationSteps {
 
     public AuthenticationSteps(Environment environment) {
         this.environment = environment;
-        this.api = environment.getPublicApi();
+        api = environment.getPublicApi();
     }
 
     @Given("^there is a user-mgmt server$")

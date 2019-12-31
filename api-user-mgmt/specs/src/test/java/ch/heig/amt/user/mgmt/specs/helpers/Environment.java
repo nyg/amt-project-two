@@ -1,7 +1,7 @@
-package io.avalia.fruits.api.spec.helpers;
+package ch.heig.amt.user.mgmt.specs.helpers;
 
-import io.avalia.fruits.api.PrivateApi;
-import io.avalia.fruits.api.PublicApi;
+import ch.heig.amt.user.mgmt.api.PrivateApi;
+import ch.heig.amt.user.mgmt.api.PublicApi;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Environment {
         Properties properties = new Properties();
         properties.load(getClass().getClassLoader().getResourceAsStream("environment.properties"));
 
-        String url = properties.getProperty("io.avalia.fruits.server.url");
+        String url = properties.getProperty("ch.heig.amt.user.mgmt.server");
 
         privateApi.getApiClient().setBasePath(url);
         publicApi.getApiClient().setBasePath(url);
