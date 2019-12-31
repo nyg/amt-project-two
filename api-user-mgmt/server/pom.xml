@@ -3,9 +3,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.swagger</groupId>
-    <artifactId>swagger-spring</artifactId>
-    <name>swagger-spring</name>
+    <groupId>ch.heig.amt</groupId>
+    <artifactId>user-mgmt-specs</artifactId>
     <version>1.0.0</version>
 
     <packaging>jar</packaging>
@@ -56,10 +55,10 @@
                                 <useBeanValidation>true</useBeanValidation>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
-                                <apiPackage>io.avalia.fruits.api</apiPackage>
-                                <configPackage>io.avalia.fruits.config</configPackage>
-                                <basePackage>io.avalia.fruits</basePackage>
-                                <modelPackage>io.avalia.fruits.api.model</modelPackage>
+                                <basePackage>ch.heig.amt.user.mgmt</basePackage>
+                                <apiPackage>ch.heig.amt.user.mgmt.api</apiPackage>
+                                <modelPackage>ch.heig.amt.user.mgmt.api.model</modelPackage>
+                                <configPackage>ch.heig.amt.user.mgmt.config</configPackage>
                             </configOptions>
                         </configuration>
                     </execution>
