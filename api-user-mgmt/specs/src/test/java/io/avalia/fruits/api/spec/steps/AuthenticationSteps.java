@@ -1,67 +1,67 @@
 package io.avalia.fruits.api.spec.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.avalia.fruits.ApiException;
 import io.avalia.fruits.ApiResponse;
-import io.avalia.fruits.api.DefaultApi;
-import io.avalia.fruits.api.dto.Fruit;
+import io.avalia.fruits.api.PublicApi;
+import io.avalia.fruits.api.dto.Identifiers;
 import io.avalia.fruits.api.spec.helpers.Environment;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Olivier Liechti on 27/07/17.
  */
-public class CreationSteps {
+public class AuthenticationSteps {
 
     private Environment environment;
-    private DefaultApi api;
+    private PublicApi api;
 
-    Fruit fruit;
+    private Identifiers identifiers;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
     private boolean lastApiCallThrewException;
     private int lastStatusCode;
 
-    public CreationSteps(Environment environment) {
+    public AuthenticationSteps(Environment environment) {
         this.environment = environment;
-        this.api = environment.getApi();
+        this.api = environment.getPublicApi();
     }
 
-    @Given("^there is a Fruits server$")
-    public void there_is_a_Fruits_server() throws Throwable {
+    @Given("^there is a user-mgmt server$")
+    public void there_is_a_user_mgmt_server() {
         assertNotNull(api);
     }
 
-    @Given("^I have a fruit payload$")
-    public void i_have_a_fruit_payload() throws Throwable {
-        fruit = new io.avalia.fruits.api.dto.Fruit();
+    @Given("^I have an identifier payload$")
+    public void i_have_an_identifier_payload() {
+        identifiers = new Identifiers();
+        identifiers.setEmail("admin@amt.ch");
+        identifiers.setPassword("mypwd");
     }
 
-    @When("^I POST it to the /fruits endpoint$")
-    public void i_POST_it_to_the_fruits_endpoint() throws Throwable {
+    @When("^I POST it to the /api/public/authenticate endpoint$")
+    public void i_POST_it_to_the_api_public_authenticate_endpoint() {
         try {
-            lastApiResponse = api.createFruitWithHttpInfo(fruit);
+            lastApiResponse = api.authenticateUserWithHttpInfo(identifiers);
             lastApiCallThrewException = false;
             lastApiException = null;
             lastStatusCode = lastApiResponse.getStatusCode();
-        } catch (ApiException e) {
+        }
+        catch (ApiException e) {
             lastApiCallThrewException = true;
             lastApiResponse = null;
             lastApiException = e;
             lastStatusCode = lastApiException.getCode();
         }
-
     }
 
     @Then("^I receive a (\\d+) status code$")
     public void i_receive_a_status_code(int arg1) throws Throwable {
-        assertEquals(201, lastStatusCode);
+        assertEquals(200, lastStatusCode);
     }
-
 }

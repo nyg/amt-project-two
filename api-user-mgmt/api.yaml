@@ -23,6 +23,8 @@ paths:
       description: Allows a user to authentication himself.
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: identifiers
           in: body
