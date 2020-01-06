@@ -3,6 +3,7 @@ package io.avalia.fruits.api.endpoints;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.avalia.fruits.api.ArticleApi;
 import io.avalia.fruits.api.model.Article;
+import io.avalia.fruits.api.model.OptionalArticle;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,7 @@ public class ArticleApiController implements ArticleApi {
         return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Article> articlePut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
+    public ResponseEntity<Article> articlePut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody OptionalArticle article) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

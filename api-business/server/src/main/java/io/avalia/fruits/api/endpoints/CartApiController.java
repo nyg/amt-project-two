@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-16T15:02:02.960Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-06T15:11:07.800Z")
 
 @Controller
 public class CartApiController implements CartApi {
@@ -41,6 +41,20 @@ public class CartApiController implements CartApi {
     public ResponseEntity<Void> cartDelete(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Article> cartGet() {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Article>(objectMapper.readValue("{  \"price\" : 6.02745618307040320615897144307382404804229736328125,  \"name\" : \"name\",  \"description\" : \"description\",  \"id\" : 0}", Article.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Article>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Article> cartPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
