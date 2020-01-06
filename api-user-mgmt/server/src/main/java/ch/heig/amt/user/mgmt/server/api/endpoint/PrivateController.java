@@ -44,7 +44,7 @@ public class PrivateController implements PrivateApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> updateUser(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalUser user) {
+    public ResponseEntity<OptionalUser> updateUser(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalUser user) {
 
         String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.matches("Bearer .*")) {
@@ -73,15 +73,25 @@ public class PrivateController implements PrivateApi {
         UserEntity userEntity = entity.get();
         userEntity.setFirstNameIfNotNull(user.getFirstName());
         userEntity.setLastNameIfNotNull(user.getLastName());
-        userEntity.setActiveIfNotNull(user.getActive());
-        userEntity.setAdminIfNotNull(user.getAdmin());
+
+        if (admin) {
+            userEntity.setActiveIfNotNull(user.getActive());
+            userEntity.setAdminIfNotNull(user.getAdmin());
+        }
 
         if (user.getPassword() != null) {
             userEntity.setPassword(authenticationService.hashPassword(user.getPassword()));
         }
 
-        userRepository.save(userEntity);
+        UserEntity savedEntity = userRepository.save(userEntity);
 
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        OptionalUser updatedUser = new OptionalUser()
+                .email(savedEntity.getEmail())
+                .firstName(savedEntity.getFirstName())
+                .lastName(savedEntity.getLastName())
+                .active(savedEntity.isActive())
+                .admin(savedEntity.isAdmin());
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 }
