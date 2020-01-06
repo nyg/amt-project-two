@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.heig.amt</groupId>
-    <artifactId>user-mgmt-specs</artifactId>
+    <artifactId>user-mgmt-server</artifactId>
     <version>1.0.0</version>
 
     <packaging>jar</packaging>
