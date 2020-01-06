@@ -11,15 +11,15 @@ The objectives of this project is to design, specify, implement and validate **2
 ## Functional requirements
 
 * Design, specify and implement **a first API** that is used to **manage** user accounts. 
-  * Every account has at least an e-mail (used as the primary ID), a first name, a last name and a password. 
-  * The API must also allow the user to change its password. 
-  * A user cannot change the password of someone else.
+  * ~~Every account has at least an e-mail (used as the primary ID), a first name, a last name and a password.~~
+  * ~~The API must also allow the user to change its password.~~
+  * ~~A user cannot change the password of someone else.~~
   * ~~The API also exposes an endpoint to authenticate a user: it returns a JWT token if the provided credentials are correct.~~
   * Specify, implement and validate at least one of these features:
-    * ~~Only a user with an ADMIN role can create accounts.~~
-    * A user with an ADMIN role can block/unblock a user account; when blocked, the user cannot login. Be mindful of JWT tokens.
-    * ~~A user needs to prove that he owns the e-mail address (by receiving an e-mail with a code).~~
-    * ~~A user can ask to reset his password, which is done via e-mail (typical reset password).~~
+    * NOT IMPLEMENTED: Only a user with an ADMIN role can create accounts.
+    * ~~A user with an ADMIN role can block/unblock a user account; when blocked, the user cannot login. Be mindful of JWT tokens.~~
+    * NOT IMPLEMENTED: A user needs to prove that he owns the e-mail address (by receiving an e-mail with a code).
+    * NOT IMPLEMENTED: A user can ask to reset his password, which is done via e-mail (typical reset password).
 * Like in the first project, **expose at least 3 entities through a second REST API** (one of them capturing the relationship between the two others; for instance, *Membership* would capture the relationship between *Person* and *Group*). You can use the same entities that you used in the first project, but do not have to.
   * The REST API must support CRUD operations on the 2 main entities; you have to specify what is the intended behavior when you delete an entity.
   * The REST API must provide a way to associate/de-associate a pair of two main entities.
@@ -75,10 +75,10 @@ You don't have to follow this sequence if you prefer to do some of the tasks bef
 
 **Week 1 (December 2nd):**
 
-* Get familiar with the 2 reference projects; be able to build and run them on your machine; be able to run the CucumberJVM tests.
-* Do a first draft of the 2 REST APIs; have them reviewed if you are creating an API for the first time or are not sure about some design choices.
-* Get familiar with the Open API syntax; use the Swagger Editor or one of the IDE plugins to write your spec.
-* Create a git repo for your project. You should have 4 modules: 2 backend and 2 BDD projects. Use the reference projects as a template. Prepare the Docker Compose topology and images. Prepare scripts to build the code and the Docker the images.
+* ~~Get familiar with the 2 reference projects; be able to build and run them on your machine; be able to run the CucumberJVM tests.~~
+* ~~Do a first draft of the 2 REST APIs; have them reviewed if you are creating an API for the first time or are not sure about some design choices.~~
+* ~~Get familiar with the Open API syntax; use the Swagger Editor or one of the IDE plugins to write your spec.~~
+* ~~Create a git repo for your project. You should have 4 modules: 2 backend and 2 BDD projects. Use the reference projects as a template. Prepare the Docker Compose topology and images. Prepare scripts to build the code and the Docker the images.~~
 
 **Week 2 (December 9th):**
 
