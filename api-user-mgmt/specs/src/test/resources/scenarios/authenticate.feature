@@ -1,7 +1,7 @@
 Feature: Authentication of a user
 
   Background:
-    Given there is a user-mgmt server
+    Given there is a public user-mgmt server
 
   Scenario: Successful user authentication
     Given I have a valid identifier payload
