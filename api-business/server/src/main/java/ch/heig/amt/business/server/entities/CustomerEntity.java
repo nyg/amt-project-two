@@ -1,8 +1,8 @@
 package ch.heig.amt.business.server.entities;
 
+import ch.heig.amt.business.server.api.model.CustomerAddress;
 import lombok.Getter;
 import lombok.Setter;
-import ch.heig.amt.business.server.api.model.CustomerAddress;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

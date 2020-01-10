@@ -74,8 +74,6 @@ public class CustomerApiController implements CustomerApi {
             return new ResponseEntity<>(customer, HttpStatus.OK);
         }
 
-
-
         return new ResponseEntity<List<Customer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
