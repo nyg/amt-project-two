@@ -9,11 +9,11 @@ services:
             - "traefik.http.routers.user-mgmt.entrypoints=web"
             - "traefik.http.services.user-mgmt.loadbalancer.server.port=8080"
         build:
-            context: ../.. # root of the project
+            context: . # root of the project
             dockerfile: docker-images/api-user-mgmt-server/Dockerfile
         depends_on:
             - db
-        # TODO spring boot start before db and crashes
+        # restart as long as db container is not started
         restart: on-failure
 
     # One mariadb container with two different databases
@@ -27,14 +27,9 @@ services:
             - "traefik.http.routers.db.services=mysql"
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: user-mgmt
-            # TODO necessary when using volumes?
-            MYSQL_USER: api
-            MYSQL_PASSWORD: api
         volumes:
-            - ../../api-user-mgmt/db/init.sql:/docker-entrypoint-initdb.d/init.sql
-            # TODO
-            #- ../../api-user-mgmt/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./api-user-mgmt/db/init.sql:/docker-entrypoint-initdb.d/init-user-mgmt.sql
+            #- ./api-business/db/init.sql:/docker-entrypoint-initdb.d/init-business.sql
         ports:
             - 3306:3306
 
@@ -53,3 +48,12 @@ services:
           - 8080:8080
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
+    
+    # mostly for debug purposes
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=db
+        ports:
+            - 8888:80
