@@ -58,7 +58,7 @@
                                 <basePackage>ch.heig.amt.user.mgmt</basePackage>
                                 <apiPackage>ch.heig.amt.user.mgmt.api</apiPackage>
                                 <modelPackage>ch.heig.amt.user.mgmt.api.model</modelPackage>
-                                <configPackage>ch.heig.amt.user.mgmt.config</configPackage>
+                                <configPackage>ch.heig.amt.user.mgmt.configuration</configPackage>
                             </configOptions>
                         </configuration>
                     </execution>

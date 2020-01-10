@@ -5,13 +5,12 @@ services:
         container_name: user-mgmt-server
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.whoami.rule=Host(`user-mgmt-server.localhost`)"
-            - "traefik.http.routers.whoami.entrypoints=web"
+            - "traefik.http.routers.user-mgmt.rule=Host(`localhost`) && PathPrefix(`/api`)"
+            - "traefik.http.routers.user-mgmt.entrypoints=web"
+            - "traefik.http.services.user-mgmt.loadbalancer.server.port=8080"
         build:
             context: ../.. # root of the project
             dockerfile: docker-images/api-user-mgmt-server/Dockerfile
-        ports:
-            - 8080:8080
         depends_on:
             - db
         # TODO spring boot start before db and crashes
@@ -21,6 +20,11 @@ services:
     db:
         container_name: db
         image: mariadb:10.4
+        labels:
+            - "traefik.enabled=true"
+            - "traefik.http.routers.db.rule=Host(`localhost`)"
+            - "traefik.http.routers.db.entrypoints=mysql"
+            - "traefik.http.routers.db.services=mysql"
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: user-mgmt
@@ -34,26 +38,18 @@ services:
         ports:
             - 3306:3306
 
-    # PHPMyAdmin for eventual debugging
-    phpmyadmin:
-        container_name: user-mgmt-phpmyadmin
-        image: phpmyadmin/phpmyadmin
-        environment:
-            - PMA_HOST=user-mgmt-db
-        ports:
-            - 8888:80
-
     traefik:
         container_name: traefik
-        image: traefik:v2.0.0-rc3
+        image: traefik:v2.1
         command:
           - "--log.level=DEBUG"
           - "--api.insecure=true"
           - "--providers.docker=true"
           - "--providers.docker.exposedbydefault=false"
           - "--entrypoints.web.address=:80"
+          - "--entrypoints.mysql.address=:3306"
         ports:
           - 80:80
-          - 8081:8080
+          - 8080:8080
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro

@@ -6,9 +6,9 @@ Feature: Authentication of a user
   Scenario: Successful user authentication
     Given I have a valid identifier payload
     When I POST it to the /api/public/authenticate endpoint
-    Then I receive a 200 status code
+    Then I receive a 200 status code - auth
 
   Scenario: Failed user authentication
     Given I have an invalid identifier payload
     When I POST it to the /api/public/authenticate endpoint
-    Then I receive a 401 status code
+    Then I receive a 401 status code - auth

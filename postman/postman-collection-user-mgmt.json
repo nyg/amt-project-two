@@ -149,6 +149,127 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Create user – Success",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"fred@amt.ch\",\n\t\"password\":\"pass122224\",\n\t\"firstName\": \"Fred\",\n\t\"lastName\": \"Berthier\",\n\t\"active\": true,\n\t\"admin\": false\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/public/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"public",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user – Missing fields",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"fred@amt.ch\",\n\t\"password\":\"pass122224\",\n\t\"admin\": false\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/public/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"public",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit user – Own",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJhZG1pbkBhbXQuY2gifQ.DWTcPRM_BDzbDgYhDL05bwOqgZNo1OPOG0mrYOFQh5I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lastName\":\"admin2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/private/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"user"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

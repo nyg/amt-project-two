@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '1.0.0'
+  version: '1.0'
   title: User Management API
   description: API to manage users
   termsOfService: none
@@ -47,12 +47,18 @@ paths:
       description: Allows a user to modify his account detail.
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: user
           in: body
           required: true
           schema:
             $ref: '#/definitions/optionalUser'
+        - name: Authorization
+          in: header
+          required: true
+          type: string
       responses:
         200:
           description: Account updated.
