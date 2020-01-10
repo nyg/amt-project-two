@@ -22,7 +22,7 @@ public class SwaggerDocumentationConfig {
             .license("MIT")
             .licenseUrl("http://opensource.org/licenses/MIT")
             .termsOfServiceUrl("")
-            .version("1.0.0")
+            .version("1.0")
             .contact(new Contact("","", ""))
             .build();
     }
@@ -31,7 +31,7 @@ public class SwaggerDocumentationConfig {
     public Docket customImplementation(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                    .apis(RequestHandlerSelectors.basePackage("io.avalia.fruits.api"))
+                    .apis(RequestHandlerSelectors.basePackage("ch.heig.amt.user.mgmt.server.api"))
                     .build()
                 .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)

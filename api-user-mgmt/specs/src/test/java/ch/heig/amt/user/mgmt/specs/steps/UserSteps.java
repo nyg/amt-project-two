@@ -38,13 +38,15 @@ public class UserSteps {
         user = new OptionalUser();
         user.setFirstName("aFirstName");
         user.setLastName("aLastName");
-        user.setActive(false);
+        user.setActive(true);
     }
 
     @When("^I PUT it to the /api/private/user endpoint$")
     public void i_PUT_it_to_the_api_private_user_endpoint() {
         try {
-            lastApiResponse = api.updateUserWithHttpInfo(user);
+            // hardcoded token for user jacques@amt.ch
+            String hardcodedToken = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6ZmFsc2UsImVtYWlsIjoiamFjcXVlc0BhbXQuY2gifQ.UuCtxv8nBb48uj5SztfZ3NEGa2pdpDtJY818DaYlflw";
+            lastApiResponse = api.updateUserWithHttpInfo(hardcodedToken, user);
             lastApiException = null;
             lastStatusCode = lastApiResponse.getStatusCode();
         }

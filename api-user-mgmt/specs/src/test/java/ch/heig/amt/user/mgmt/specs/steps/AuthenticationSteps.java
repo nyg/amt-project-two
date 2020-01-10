@@ -59,7 +59,7 @@ public class AuthenticationSteps {
         }
     }
 
-    @Then("^I receive a (\\d+) status code$")
+    @Then("^I receive a (\\d+) status code - auth$")
     public void i_receive_a_status_code_auth(int statusCode) {
         assertEquals(statusCode, lastStatusCode);
     }
