@@ -49,7 +49,7 @@ public class CustomerApiController implements CustomerApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<Customer>> customerGet() {
+    public ResponseEntity<Customer> customerGet() {
         /*
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
@@ -71,10 +71,15 @@ public class CustomerApiController implements CustomerApi {
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
             CustomerEntity customer = currentEntity.get();
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+            Customer savedCustomer = new Customer()
+                    .address(customer.getAddress())
+                    .email(customer.getEmail())
+                    .firstName(customer.getFirstName())
+                    .lastName(customer.getLastName())
+                    .address(customer.getAddress());
+            return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
         }
-
-        return new ResponseEntity<List<Customer>>(HttpStatus.NOT_IMPLEMENTED);
+        return null;
     }
 
     public ResponseEntity<Customer> customerPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody OptionalCustomer customer) {
@@ -99,7 +104,14 @@ public class CustomerApiController implements CustomerApi {
                 customerEntity.setAddress(customer.getAddress());
 
                 CustomerEntity savedEntity = customerRepository.save(customerEntity);
-                return new ResponseEntity<>(savedEntity, HttpStatus.OK);
+                Customer savedCustomer = new Customer()
+                        .address(savedEntity.getAddress())
+                        .email(savedEntity.getEmail())
+                        .firstName(savedEntity.getFirstName())
+                        .lastName(savedEntity.getLastName())
+                        .address(savedEntity.getAddress());
+
+                return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
             }
             else{
                 throw new CustomerNotFoundException();

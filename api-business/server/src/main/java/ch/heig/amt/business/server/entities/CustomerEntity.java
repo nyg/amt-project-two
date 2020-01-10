@@ -19,6 +19,5 @@ public class CustomerEntity implements Serializable {
 
     private String firstName;
     private String lastName;
-    private BigDecimal price;
     private CustomerAddress address;
 }
