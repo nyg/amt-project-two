@@ -82,18 +82,18 @@ You don't have to follow this sequence if you prefer to do some of the tasks bef
 
 **Week 2 (December 9th):**
 
-* Implement a **first endpoint** (one of the 2 main entities) end-to-end. You should be able to perform CRUD operations on the endpoint and validate that it works with Cucumber. One person can focus on the backend, the other on the Cucumber tests.
+* ~~Implement a **first endpoint** (one of the 2 main entities) end-to-end. You should be able to perform CRUD operations on the endpoint and validate that it works with Cucumber. One person can focus on the backend, the other on the Cucumber tests.~~
 * Be mindful that **created resources have an owner**, and that only the owner should be able to access its resources (for RUD operations). Plan for that, even if you don't have your authentication service fully implemented.
 
 **Week 3 (December 16th):**
 
-* Design, implement and validate the **user management** and **authentication** API.
-* Go back to the first endpoint implementation and **enforce security rules**.
+* ~~Design, implement and validate the **user management** and **authentication** API.~~
+* ~~Go back to the first endpoint implementation and **enforce security rules**.~~
 * Implement BDD scenarios to validate that authentication and authorization rules work as expected.
 
 **Week 4 (January 6th):**
 
-* Implement the **second endpoint**, swapping the role (the person working on Spring Boot now works on Cucumber and vice versa)
+* Implement the **second endpoint**
 * Implement the **third endpoint**, to manage associations between entities (end-to-end, with tests)
 * Add **Traefik** in the Docker topology
 
