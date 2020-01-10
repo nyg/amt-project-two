@@ -56,14 +56,22 @@
                                 <useBeanValidation>true</useBeanValidation>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
-                                <apiPackage>io.avalia.fruits.api</apiPackage>
-                                <configPackage>io.avalia.fruits.config</configPackage>
-                                <basePackage>io.avalia.fruits</basePackage>
-                                <modelPackage>io.avalia.fruits.api.model</modelPackage>
+                                <apiPackage>ch.heig.amt.business.server.api</apiPackage>
+                                <configPackage>ch.heig.amt.business.server.configuration</configPackage>
+                                <basePackage>ch.heig.amt.business</basePackage>
+                                <modelPackage>ch.heig.amt.business.server.api.model</modelPackage>
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>12</source>
+                    <target>12</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -123,6 +131,11 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.8.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
