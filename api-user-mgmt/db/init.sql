@@ -2,8 +2,8 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: api-user-mgmt-db
--- Generation Time: Dec 15, 2019 at 11:09 PM
+-- Host: db
+-- Generation Time: Jan 10, 2020 at 12:19 PM
 -- Server version: 10.4.11-MariaDB-1:10.4.11+maria~bionic
 -- PHP Version: 7.2.25
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `user-mgmt`
 --
+CREATE DATABASE IF NOT EXISTS `user-mgmt` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `user-mgmt`;
 
 -- --------------------------------------------------------
 
