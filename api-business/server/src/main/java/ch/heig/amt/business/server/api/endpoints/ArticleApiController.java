@@ -90,15 +90,6 @@ public class ArticleApiController implements ArticleApi {
        return null;
     }
 
-    private ArticleEntity toArticleEntity(Article article) {
-        ArticleEntity entity = new ArticleEntity();
-        entity.setDescription(article.getDescription());
-        entity.setId(article.getId());
-        entity.setName(article.getName());
-        entity.setPrice(article.getPrice());
-        return entity;
-    }
-
     public ResponseEntity<Article> articlePut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody OptionalArticle article) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
@@ -113,4 +104,12 @@ public class ArticleApiController implements ArticleApi {
         return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    private ArticleEntity toArticleEntity(Article article) {
+        ArticleEntity entity = new ArticleEntity();
+        entity.setDescription(article.getDescription());
+        entity.setId(article.getId());
+        entity.setName(article.getName());
+        entity.setPrice(article.getPrice());
+        return entity;
+    }
 }
