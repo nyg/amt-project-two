@@ -46,6 +46,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserCreationException.class)
     public ResponseEntity<ApiError> handleUserCreationException(UserCreationException e) {
+        return new ResponseEntity<>(new ApiError(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleUserCreationException(UserAlreadyExistsException e) {
         return new ResponseEntity<>(new ApiError(e.getMessage()), HttpStatus.CONFLICT);
     }
 }

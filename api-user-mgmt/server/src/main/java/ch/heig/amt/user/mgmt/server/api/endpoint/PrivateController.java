@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
@@ -44,9 +45,8 @@ public class PrivateController implements PrivateApi {
         this.request = request;
     }
 
-    public ResponseEntity<OptionalUser> updateUser(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalUser user) {
+    public ResponseEntity<OptionalUser> updateUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,@ApiParam(value = "" ,required=true )  @Valid @RequestBody OptionalUser user) {
 
-        String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.matches("Bearer .*")) {
             throw new AuthenticationException();
         }
