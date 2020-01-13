@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by Olivier Liechti on 26/07/17.
  */
-public interface CartRepository extends CrudRepository<CartEntity, Long>{
+public interface CartRepository extends CrudRepository<CartEntity, String>{
 
 }

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class ArticleEntity implements Serializable {
 
     @Id
-    private int id;
+    private long id;
 
     private String name;
     private String description;

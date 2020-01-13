@@ -59,7 +59,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/article'
+            $ref: '#/definitions/optionalArticle'
       responses:
         200:
           description: updated
@@ -70,10 +70,29 @@ paths:
         - private
       summary: Delete an article
       description: Allows an admin to delete an article
+      consumes:
+        - application/json
+      parameters:
+        - name: article
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/article'
       responses:
         200:
-          description : deleted
+          description: deleted
   /customer:
+    get:
+      tags:
+        - private
+      summary: Get current user informations.
+      description: Allow the customer to get his personnal information.
+      responses:
+        200:
+          description: Success.
+          schema:
+            $ref: '#/definitions/customer'
+
     put:
       tags:
         - private
@@ -86,13 +105,27 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/customer'
+            $ref: '#/definitions/optionalCustomer'
       responses:
         200:
           description: updated
           schema:
             $ref: '#/definitions/customer'
   /cart:
+    get:
+      tags:
+        - private
+      summary: Get content of cart
+      description: Allow a user to consult all articles in his cart
+      consumes:
+        - application/json
+      responses:
+        200:
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/article'
     put:
       tags:
         - private
@@ -110,11 +143,13 @@ paths:
         200:
           description: updated
           schema:
-            $ref: '#/definitions/article'
+            type: array
+            items:
+              $ref: '#/definitions/article'
     delete:
       tags:
         - private
-      summary: Delete article from cart
+      summary: Delete all articles from cart
       description: Allow any user to delete an article from his cart
       consumes:
         - application/json
@@ -128,6 +163,22 @@ paths:
         200:
           description: deleted
 
+  /cart/{articleID}:
+    delete:
+      tags:
+        - private
+      summary: Delete specified article from cart
+      description: Allow a user to delete on article from his cart on specifying the id
+      parameters:
+        - in: path
+          name: articleID
+          description: ID of the article
+          required: true
+          type: integer
+      responses:
+        200:
+          description: updated
+
 definitions:
   article:
     type: object
@@ -139,13 +190,25 @@ definitions:
     properties:
       id:
         type: integer
+        format: int64
       name:
         type: string
       price:
         type: number
       description:
         type: string
-
+  optionalArticle:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      price:
+        type: number
+      description:
+        type: string
   customer:
     type: object
     required:
@@ -167,6 +230,35 @@ definitions:
           - city
           - ZIP
           - country
+        properties:
+          street:
+            type: string
+          number:
+            type: integer
+          city:
+            type: string
+          ZIP:
+            type: integer
+          country:
+            type: string
+
+  optionalCustomer:
+    type: object
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      address:
+        required:
+          - street
+          - number
+          - city
+          - ZIP
+          - country
+        type: object
         properties:
           street:
             type: string

@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-16T15:02:02.960Z")
 
@@ -49,9 +50,22 @@ public class ArticleApiController implements ArticleApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> articleDelete() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Void> articleDelete (@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
+        if(accessGranted.granted(request)) {
+            String authorization = request.getHeader("Authorization");
+            String tokenValue = authorization.split(" ")[1];
+            DecodedJWT token = authenticationService.verifyToken(tokenValue);
+            if (token == null) {
+                throw new AuthenticationException();
+            }
+
+            boolean admin = token.getClaim("admin").asBoolean();
+            Optional<ArticleEntity> currentEntity = articleRepository.findById(article.getId());
+            ArticleEntity articleToDelete = currentEntity.get();
+
+            articleRepository.delete(articleToDelete);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<Article> articlePost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
@@ -77,6 +91,7 @@ public class ArticleApiController implements ArticleApi {
            boolean admin = token.getClaim("admin").asBoolean();
            //TODO : if admin not true launch exception
 
+
            ArticleEntity newArticleEntity = toArticleEntity(article);
            articleRepository.save(newArticleEntity);
 
@@ -91,7 +106,7 @@ public class ArticleApiController implements ArticleApi {
     }
 
     public ResponseEntity<Article> articlePut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody OptionalArticle article) {
-        String accept = request.getHeader("Accept");
+        /*String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 return new ResponseEntity<Article>(objectMapper.readValue("{  \"price\" : 6.02745618307040320615897144307382404804229736328125,  \"name\" : \"name\",  \"description\" : \"description\",  \"id\" : 0}", Article.class), HttpStatus.NOT_IMPLEMENTED);
@@ -101,7 +116,36 @@ public class ArticleApiController implements ArticleApi {
             }
         }
 
-        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
+        if(accessGranted.granted(request)) {
+            String authorization = request.getHeader("Authorization");
+            String tokenValue = authorization.split(" ")[1];
+            DecodedJWT token = authenticationService.verifyToken(tokenValue);
+            if (token == null) {
+                throw new AuthenticationException();
+            }
+
+            boolean admin = token.getClaim("admin").asBoolean();
+            //TODO : if admin not true launch exception
+
+            Optional<ArticleEntity> currentEntity = articleRepository.findById(article.getId());
+                if(currentEntity.isPresent()){
+                    ArticleEntity articleEntity = currentEntity.get();
+                    articleEntity.setPrice(article.getPrice());
+                    articleEntity.setName(article.getName());
+                    articleEntity.setDescription(article.getDescription());
+
+                    ArticleEntity savedEntity = articleRepository.save(articleEntity);
+                    Article savedArticle = new Article()
+                            .price(savedEntity.getPrice())
+                            .description(savedEntity.getDescription())
+                            .name(savedEntity.getName());
+                    return new ResponseEntity<>(savedArticle, HttpStatus.OK);
+                }
+
+
+        }
+        return null;
     }
 
     private ArticleEntity toArticleEntity(Article article) {
