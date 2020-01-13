@@ -73,6 +73,8 @@ paths:
       description: Allows anybody to register a new user account.
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: user
           in: body

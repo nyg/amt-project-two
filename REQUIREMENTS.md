@@ -95,7 +95,7 @@ You don't have to follow this sequence if you prefer to do some of the tasks bef
 
 * Implement the **second endpoint**
 * Implement the **third endpoint**, to manage associations between entities (end-to-end, with tests)
-* Add **Traefik** in the Docker topology
+* ~~Add **Traefik** in the Docker topology~~
 
 **Week 5 (January 13th):**
 

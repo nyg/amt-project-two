@@ -4,6 +4,7 @@ import ch.heig.amt.user.mgmt.api.PublicApi;
 import ch.heig.amt.user.mgmt.api.model.Identifiers;
 import ch.heig.amt.user.mgmt.api.model.Token;
 import ch.heig.amt.user.mgmt.api.model.User;
+import ch.heig.amt.user.mgmt.server.api.exception.UserAlreadyExistsException;
 import ch.heig.amt.user.mgmt.server.api.exception.UserCreationException;
 import ch.heig.amt.user.mgmt.server.entity.UserEntity;
 import ch.heig.amt.user.mgmt.server.service.AuthenticationService;
@@ -85,7 +86,7 @@ public class PublicController implements PublicApi {
 
         Optional<UserEntity> currentEntity = userRepository.findById(user.getEmail());
         if (currentEntity.isPresent()) {
-            throw new UserCreationException("Email already taken");
+            throw new UserAlreadyExistsException();
         }
 
         UserEntity entity = new UserEntity(user);

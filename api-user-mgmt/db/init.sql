@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `user-mgmt`
 --
-CREATE DATABASE IF NOT EXISTS `user-mgmt` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `user-mgmt` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `user-mgmt`;
 
 -- --------------------------------------------------------
