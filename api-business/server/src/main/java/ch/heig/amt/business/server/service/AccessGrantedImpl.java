@@ -11,7 +11,7 @@ public class AccessGrantedImpl implements  AccessGranted{
     @Autowired
     AuthenticationService authenticationService;
 
-    public boolean granted(HttpServletRequest request){
+    public DecodedJWT granted(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.matches("Bearer .*")) {
             throw new AuthenticationException();
@@ -22,6 +22,6 @@ public class AccessGrantedImpl implements  AccessGranted{
         if (token == null) {
             throw new AuthenticationException();
         }
-        return true;
+        return token;
     }
 }

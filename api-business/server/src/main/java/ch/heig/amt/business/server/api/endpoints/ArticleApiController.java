@@ -51,13 +51,8 @@ public class ArticleApiController implements ArticleApi {
     }
 
     public ResponseEntity<Void> articleDelete (@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
-        if(accessGranted.granted(request)) {
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             boolean admin = token.getClaim("admin").asBoolean();
             Optional<ArticleEntity> currentEntity = articleRepository.findById(article.getId());
@@ -80,15 +75,10 @@ public class ArticleApiController implements ArticleApi {
         }
 
         return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
-       if(accessGranted.granted(request)){
-           String authorization = request.getHeader("Authorization");
-           String tokenValue = authorization.split(" ")[1];
-           DecodedJWT token = authenticationService.verifyToken(tokenValue);
-           if (token == null) {
-               throw new AuthenticationException();
-           }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
-           boolean admin = token.getClaim("admin").asBoolean();
+            boolean admin = token.getClaim("admin").asBoolean();
            //TODO : if admin not true launch exception
 
 
@@ -117,13 +107,8 @@ public class ArticleApiController implements ArticleApi {
         }
 
         return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
-        if(accessGranted.granted(request)) {
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             boolean admin = token.getClaim("admin").asBoolean();
             //TODO : if admin not true launch exception
