@@ -15,6 +15,6 @@ import java.util.ArrayList;
 public class CartEntity implements Serializable {
 
     @Id
-    private int customerId;
+    private String customerId;
     private ArrayList<Article> listArticle;
 }

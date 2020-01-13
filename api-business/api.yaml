@@ -121,9 +121,11 @@ paths:
         - application/json
       responses:
         200:
-          description: Success
+          description: success
           schema:
-            $ref: '#/definitions/article'
+            type: array
+            items:
+              $ref: '#/definitions/article'
     put:
       tags:
         - private
@@ -141,11 +143,13 @@ paths:
         200:
           description: updated
           schema:
-            $ref: '#/definitions/article'
+            type: array
+            items:
+              $ref: '#/definitions/article'
     delete:
       tags:
         - private
-      summary: Delete article from cart
+      summary: Delete all articles from cart
       description: Allow any user to delete an article from his cart
       consumes:
         - application/json
@@ -158,6 +162,22 @@ paths:
       responses:
         200:
           description: deleted
+
+  /cart/{articleID}:
+    delete:
+      tags:
+        - private
+      summary: Delete specified article from cart
+      description: Allow a user to delete on article from his cart on specifying the id
+      parameters:
+        - in: path
+          name: articleID
+          description: ID of the article
+          required: true
+          type: integer
+      responses:
+        200:
+          description: updated
 
 definitions:
   article:
