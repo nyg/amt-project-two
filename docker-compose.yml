@@ -16,6 +16,20 @@ services:
         # restart as long as db container is not started
         restart: on-failure
 
+    business-server:
+        container_name: business-server
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.user-mgmt.rule=Host(`localhost`) && PathPrefix(`/api`)"
+            - "traefik.http.routers.user-mgmt.entrypoints=web"
+            - "traefik.http.services.user-mgmt.loadbalancer.server.port=8080"
+        build:
+            context: . # root of the project
+            dockerfile: docker-images/api-business-server/Dockerfile
+        depends_on:
+            - db
+        restart: on-failure
+
     # One mariadb container with two different databases
     db:
         container_name: db
