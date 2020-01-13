@@ -105,7 +105,6 @@ public class CustomerApiController implements CustomerApi {
 
                 CustomerEntity savedEntity = customerRepository.save(customerEntity);
                 Customer savedCustomer = new Customer()
-                        .address(savedEntity.getAddress())
                         .email(savedEntity.getEmail())
                         .firstName(savedEntity.getFirstName())
                         .lastName(savedEntity.getLastName())
