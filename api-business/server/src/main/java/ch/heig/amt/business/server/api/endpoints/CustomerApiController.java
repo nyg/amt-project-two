@@ -61,23 +61,22 @@ public class CustomerApiController implements CustomerApi {
             }
         }*/
         DecodedJWT token = accessGranted.granted(request);
-        if(token != null){
+        if (token != null) {
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
             CustomerEntity customer = currentEntity.get();
             Customer savedCustomer = new Customer()
-                    .address(customer.getAddress())
+                    .address(customer.getAddress().asCustomerAddress())
                     .email(customer.getEmail())
                     .firstName(customer.getFirstName())
-                    .lastName(customer.getLastName())
-                    .address(customer.getAddress());
+                    .lastName(customer.getLastName());
             return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
         }
         return null;
     }
 
-    public ResponseEntity<Customer> customerPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody OptionalCustomer customer) {
+    public ResponseEntity<Customer> customerPut(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalCustomer customer) {
         /*String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -91,30 +90,28 @@ public class CustomerApiController implements CustomerApi {
         return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
         */
         DecodedJWT token = accessGranted.granted(request);
-        if(token != null){  //si le customer est bien identifié
+        if (token != null) {  //si le customer est bien identifié
 
             Optional<CustomerEntity> currentEntity = customerRepository.findById(customer.getEmail());
-            if(currentEntity.isPresent()){
+            if (currentEntity.isPresent()) {
                 CustomerEntity customerEntity = currentEntity.get();
                 customerEntity.setLastName(customer.getLastName());
                 customerEntity.setFirstName(customer.getFirstName());
-                customerEntity.setAddress(customer.getAddress());
+                customerEntity.setCustomerAddress(customer.getAddress());
 
                 CustomerEntity savedEntity = customerRepository.save(customerEntity);
                 Customer savedCustomer = new Customer()
                         .email(savedEntity.getEmail())
                         .firstName(savedEntity.getFirstName())
                         .lastName(savedEntity.getLastName())
-                        .address(savedEntity.getAddress());
+                        .address(savedEntity.getAddress().asCustomerAddress());
 
                 return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
             }
-            else{
+            else {
                 throw new CustomerNotFoundException();
             }
         }
         return null;
     }
-
-
 }

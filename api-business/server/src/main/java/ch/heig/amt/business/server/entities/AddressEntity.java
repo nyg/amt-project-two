@@ -1,12 +1,12 @@
 package ch.heig.amt.business.server.entities;
 
+import ch.heig.amt.business.server.api.model.CustomerAddress;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Entity(name = "address")
 @Getter
@@ -19,4 +19,8 @@ public class AddressEntity implements Serializable {
     private String city;
     private String country;
     private int number;
+
+    public CustomerAddress asCustomerAddress() {
+        return new CustomerAddress().street(street).city(city).country(country).number(number);
+    }
 }

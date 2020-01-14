@@ -43,7 +43,7 @@ services:
             MYSQL_ROOT_PASSWORD: root
         volumes:
             - ./api-user-mgmt/db/init.sql:/docker-entrypoint-initdb.d/init-user-mgmt.sql
-            #- ./api-business/db/init.sql:/docker-entrypoint-initdb.d/init-business.sql
+            - ./api-business/db/init.sql:/docker-entrypoint-initdb.d/init-business.sql
         ports:
             - 3306:3306
 
