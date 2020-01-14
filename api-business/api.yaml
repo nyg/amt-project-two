@@ -81,6 +81,25 @@ paths:
       responses:
         200:
           description: deleted
+
+  /article/{articleID}:
+    get:
+      tags:
+        - private
+      summary: Get specified article
+      description: Allow a user to get info on article by specifying its id
+      parameters:
+        - in: path
+          name: articleID
+          description: ID of the article
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/article'
+
   /customer:
     get:
       tags:

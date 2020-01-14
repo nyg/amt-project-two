@@ -60,13 +60,8 @@ public class CustomerApiController implements CustomerApi {
                 return new ResponseEntity<List<Customer>>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }*/
-        if(accessGranted.granted(request)){ //si un customer est bien log
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
@@ -95,7 +90,9 @@ public class CustomerApiController implements CustomerApi {
 
         return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
         */
-        if(accessGranted.granted(request)){ //si le customer est bon
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){  //si le customer est bien identifié
+
             Optional<CustomerEntity> currentEntity = customerRepository.findById(customer.getEmail());
             if(currentEntity.isPresent()){
                 CustomerEntity customerEntity = currentEntity.get();

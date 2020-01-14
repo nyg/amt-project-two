@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class AddressEntity implements Serializable {
+    @Id
+    private int id;
 
     private String street;
     private String city;

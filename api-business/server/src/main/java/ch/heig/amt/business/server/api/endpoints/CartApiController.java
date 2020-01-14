@@ -57,13 +57,8 @@ public class CartApiController implements CartApi {
 
 
     public ResponseEntity<Void> cartArticleIDDelete(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleID") Integer articleID) {
-        if (accessGranted.granted(request)) {
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
@@ -88,13 +83,8 @@ public class CartApiController implements CartApi {
     }
 
     public ResponseEntity<Void> cartDelete(){
-        if (accessGranted.granted(request)) {
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
@@ -110,13 +100,8 @@ public class CartApiController implements CartApi {
     }
 
     public ResponseEntity<List<Article>> cartGet() {
-        if (accessGranted.granted(request)) {
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
@@ -130,13 +115,8 @@ public class CartApiController implements CartApi {
     }
 
     public ResponseEntity<List<Article>> cartPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
-        if (accessGranted.granted(request)) {
-            String authorization = request.getHeader("Authorization");
-            String tokenValue = authorization.split(" ")[1];
-            DecodedJWT token = authenticationService.verifyToken(tokenValue);
-            if (token == null) {
-                throw new AuthenticationException();
-            }
+        DecodedJWT token = accessGranted.granted(request);
+        if(token != null){
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
@@ -146,7 +126,9 @@ public class CartApiController implements CartApi {
             //get current list
             CartEntity cartEntity = cart.get();
             ArrayList<Article> articleArrayList = cartEntity.getListArticle();
-
+            if(articleArrayList == null){
+                articleArrayList = new ArrayList<Article>();
+            }
             //update current list
             articleArrayList.add(article);
             cartEntity.setListArticle(articleArrayList);

@@ -7,5 +7,5 @@ rootdir=$PWD
 cd "$rootdir"/api-user-mgmt/server
 mvn clean package
 
-# cd "$rootdir"/api-business/server
-# mvn clean package
+cd "$rootdir"/api-business/server
+mvn clean package
