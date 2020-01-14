@@ -16,6 +16,7 @@ services:
         # restart as long as db container is not started
         restart: on-failure
 
+    # Spring Boot server for the business API
     business-server:
         container_name: business-server
         labels:
@@ -52,17 +53,17 @@ services:
         container_name: traefik
         image: traefik:v2.1
         command:
-          - "--log.level=DEBUG"
-          - "--api.insecure=true"
-          - "--providers.docker=true"
-          - "--providers.docker.exposedbydefault=false"
-          - "--entrypoints.web.address=:8898"
-          - "--entrypoints.mysql.address=:3306"
+            - "--log.level=DEBUG"
+            - "--api.insecure=true"
+            - "--providers.docker=true"
+            - "--providers.docker.exposedbydefault=false"
+            - "--entrypoints.web.address=:8898"
+            - "--entrypoints.mysql.address=:3306"
         ports:
-          - 8898:80
-          - 8080:8080
+            - 8898:80
+            - 8080:8080
         volumes:
-          - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
     
     # Mostly for debug purposes
     phpmyadmin:
