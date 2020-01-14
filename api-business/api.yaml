@@ -20,6 +20,8 @@ paths:
         - public
       summary: Browse article.
       description: Allows a user to browse the complete list of articles available.
+      produces:
+        - application/json
       responses:
         200:
           description: Success.
@@ -35,6 +37,8 @@ paths:
       summary: Create an article
       description : Allows an admin to create a new articles
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name : article
@@ -53,6 +57,8 @@ paths:
       summary: Edit an article
       description : Allows an admin to edit an article
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name : article
@@ -88,6 +94,10 @@ paths:
         - private
       summary: Get specified article
       description: Allow a user to get info on article by specifying its id
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - in: path
           name: articleID
@@ -106,6 +116,8 @@ paths:
         - private
       summary: Get current user informations.
       description: Allow the customer to get his personnal information.
+      produces:
+        - application/json
       responses:
         200:
           description: Success.
@@ -118,6 +130,8 @@ paths:
       summary: Update customer information
       description: Allow a user to update its information
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: customer
@@ -136,7 +150,7 @@ paths:
         - private
       summary: Get content of cart
       description: Allow a user to consult all articles in his cart
-      consumes:
+      produces:
         - application/json
       responses:
         200:
@@ -151,6 +165,8 @@ paths:
       summary: Update articles in cart
       description: Allow any user to add articles to his cart
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: article
