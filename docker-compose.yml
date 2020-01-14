@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-    # Spring Boot server providing API endpoint
+    # Spring Boot server for the user management API
     user-mgmt-server:
         container_name: user-mgmt-server
         labels:
@@ -33,6 +33,7 @@ services:
         ports:
             - 3306:3306
 
+    # Traefik container that acts as the reverse proxy
     traefik:
         container_name: traefik
         image: traefik:v2.1
@@ -49,7 +50,7 @@ services:
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
     
-    # mostly for debug purposes
+    # Mostly for debug purposes
     phpmyadmin:
         container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin
