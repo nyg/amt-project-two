@@ -6,7 +6,6 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.user-mgmt.rule=Host(`localhost`) && PathPrefix(`/api/mgmt`)"
-            #- "traefik.http.routers.user-mgmt.entrypoints=web"
             - "traefik.http.services.user-mgmt.loadbalancer.server.port=8080"
         build:
             context: . # root of the project
@@ -22,7 +21,6 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.business.rule=Host(`localhost`) && PathPrefix(`/api/business`)"
-            #- "traefik.http.routers.business.entrypoints=web"
             - "traefik.http.services.business.loadbalancer.server.port=8080"
         build:
             context: . # root of the project
