@@ -35,13 +35,13 @@ paths:
       tags:
         - private
       summary: Create an article
-      description : Allows an admin to create a new articles
+      description: Allows an admin to create a new articles
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - name : article
+        - name: article
           in: body
           required: true
           schema:
@@ -49,19 +49,19 @@ paths:
       responses:
         201:
           description: created
-          schema :
+          schema:
             $ref: '#/definitions/article'
     put:
       tags:
         - private
       summary: Edit an article
-      description : Allows an admin to edit an article
+      description: Allows an admin to edit an article
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - name : article
+        - name: article
           in: body
           required: true
           schema:
@@ -116,6 +116,8 @@ paths:
       tags:
         - private
       summary: Get current user informations.
+      security:
+        - Bearer: []
       description: Allow the customer to get his personnal information.
       produces:
         - application/json
@@ -214,6 +216,12 @@ paths:
       responses:
         200:
           description: updated
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 
 definitions:
   article:
