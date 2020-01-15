@@ -64,10 +64,13 @@ public class CustomerApiController implements CustomerApi {
         if (token != null) {
 
             String email = token.getClaim("email").asString();
+
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
+
+
             CustomerEntity customer = currentEntity.get();
             Customer savedCustomer = new Customer()
-                    .address(customer.getAddress().asCustomerAddress())
+                    .address(customer.getAddress())
                     .email(customer.getEmail())
                     .firstName(customer.getFirstName())
                     .lastName(customer.getLastName());
@@ -97,14 +100,14 @@ public class CustomerApiController implements CustomerApi {
                 CustomerEntity customerEntity = currentEntity.get();
                 customerEntity.setLastName(customer.getLastName());
                 customerEntity.setFirstName(customer.getFirstName());
-                customerEntity.setCustomerAddress(customer.getAddress());
+                customerEntity.setAddress(customer.getAddress());
 
                 CustomerEntity savedEntity = customerRepository.save(customerEntity);
                 Customer savedCustomer = new Customer()
                         .email(savedEntity.getEmail())
                         .firstName(savedEntity.getFirstName())
                         .lastName(savedEntity.getLastName())
-                        .address(savedEntity.getAddress().asCustomerAddress());
+                        .address(savedEntity.getAddress());
 
                 return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
             }

@@ -51,7 +51,7 @@ public class ArticlesApiController implements ArticlesApi {
         article.setDescription(entity.getDescription());
         article.setId(entity.getId());
         article.setName(entity.getName());
-        article.setPrice(article.getPrice());
+        article.setPrice(entity.getPrice());
         return article;
     }
 }

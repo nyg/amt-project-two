@@ -1,9 +1,9 @@
 package ch.heig.amt.business.server.entities;
 
-import ch.heig.amt.business.server.api.model.CustomerAddress;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -20,19 +20,6 @@ public class CustomerEntity implements Serializable {
     private String firstName;
     private String lastName;
 
-    @OneToOne
-    private AddressEntity address;
+    private String address;
 
-    public void setCustomerAddress(CustomerAddress address) {
-
-        if (address == null) {
-            return;
-        }
-
-        AddressEntity entity = new AddressEntity();
-        entity.setStreet(address.getStreet());
-        entity.setCity(address.getCity());
-        entity.setCountry(address.getCountry());
-        entity.setNumber(address.getNumber());
-    }
 }
