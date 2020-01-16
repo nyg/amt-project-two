@@ -3,6 +3,8 @@ services:
     # Spring Boot server for the user management API
     user-mgmt-server:
         container_name: user-mgmt-server
+        environment:
+            spring_profiles_active: docker
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.user-mgmt.rule=Host(`localhost`) && PathPrefix(`/api/mgmt`)"
@@ -18,6 +20,8 @@ services:
     # Spring Boot server for the business API
     business-server:
         container_name: business-server
+        environment:
+            spring_profiles_active: docker
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.business.rule=Host(`localhost`) && PathPrefix(`/api/business`)"
