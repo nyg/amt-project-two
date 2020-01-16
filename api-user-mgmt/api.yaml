@@ -73,8 +73,6 @@ paths:
       description: Allows anybody to register a new user account.
       consumes:
         - application/json
-      produces:
-        - application/json
       parameters:
         - name: user
           in: body
@@ -119,8 +117,6 @@ definitions:
       - password
       - firstName
       - lastName
-      - active
-      - admin
     properties:
       email:
         $ref: '#/definitions/email'
@@ -130,10 +126,6 @@ definitions:
         type: string
       lastName:
         type: string
-      active:
-        type: boolean
-      admin:
-        type: boolean
   email:
     type: string
   password:

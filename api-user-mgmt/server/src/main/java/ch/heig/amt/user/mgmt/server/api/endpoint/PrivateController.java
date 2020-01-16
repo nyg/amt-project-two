@@ -75,6 +75,7 @@ public class PrivateController implements PrivateApi {
         userEntity.setLastNameIfNotNull(user.getLastName());
 
         if (admin) {
+            // only admin can modify active and admin values
             userEntity.setActiveIfNotNull(user.getActive());
             userEntity.setAdminIfNotNull(user.getAdmin());
         }

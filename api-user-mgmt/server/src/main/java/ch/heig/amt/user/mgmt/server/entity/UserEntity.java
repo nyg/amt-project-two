@@ -31,8 +31,6 @@ public class UserEntity implements Serializable {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.password = user.getPassword();
-        this.active = user.getActive();
-        this.admin = user.getAdmin();
     }
 
     public void setFirstNameIfNotNull(String firstName) {

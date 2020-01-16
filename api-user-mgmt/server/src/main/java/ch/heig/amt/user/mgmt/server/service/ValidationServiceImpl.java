@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValidationServiceImpl implements ValidationService {
 
-    private static final String RE_EMAIL = "\\w+@(\\w+\\.)+\\w{2,63}";
+    private static final String RE_EMAIL = "[a-zA-Z0-9._-]+@(\\w+\\.)+\\w{2,63}";
     private static final int PWD_LENGTH = 8;
 
     @Override
