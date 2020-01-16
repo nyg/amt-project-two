@@ -71,22 +71,6 @@ paths:
           description: updated
           schema:
             $ref: '#/definitions/article'
-    delete:
-      tags:
-        - private
-      summary: Delete an article
-      description: Allows an admin to delete an article
-      consumes:
-        - application/json
-      parameters:
-        - name: article
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/article'
-      responses:
-        200:
-          description: deleted
 
   /article/{articleID}:
     get:
@@ -104,11 +88,28 @@ paths:
           description: ID of the article
           required: true
           type: integer
+          format: int64
       responses:
         200:
           description: ok
           schema:
             $ref: '#/definitions/article'
+
+    delete:
+      tags:
+        - private
+      summary: Delete specified article
+      description: Allow an admin to delete an article
+      parameters:
+        - in: path
+          name: articleID
+          description: ID of the article
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: ok
 
   /customer:
     get:
@@ -226,7 +227,6 @@ definitions:
   article:
     type: object
     required:
-      - id
       - name
       - price
       - description
@@ -237,7 +237,7 @@ definitions:
       name:
         type: string
       price:
-        type: number
+        type: integer
       description:
         type: string
   optionalArticle:
@@ -249,7 +249,7 @@ definitions:
       name:
         type: string
       price:
-        type: number
+        type: integer
       description:
         type: string
   customer:
@@ -266,24 +266,7 @@ definitions:
       lastName:
         type: string
       address:
-        type: object
-        required:
-          - street
-          - number
-          - city
-          - ZIP
-          - country
-        properties:
-          street:
-            type: string
-          number:
-            type: integer
-          city:
-            type: string
-          ZIP:
-            type: integer
-          country:
-            type: string
+        type: string
 
   optionalCustomer:
     type: object
@@ -295,21 +278,4 @@ definitions:
       lastName:
         type: string
       address:
-        required:
-          - street
-          - number
-          - city
-          - ZIP
-          - country
-        type: object
-        properties:
-          street:
-            type: string
-          number:
-            type: integer
-          city:
-            type: string
-          ZIP:
-            type: integer
-          country:
-            type: string
+        type: string

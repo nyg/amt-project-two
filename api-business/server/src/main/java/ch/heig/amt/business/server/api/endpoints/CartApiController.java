@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-06T15:11:07.800Z")
 
@@ -107,9 +104,12 @@ public class CartApiController implements CartApi {
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
             CustomerEntity customer = currentEntity.get();
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
-
-            List<Article> articleList = cart.get().getListArticle();
-            return ResponseEntity.ok(articleList);
+            CartEntity cartEntity = cart.get();
+            if(!(cartEntity.getListArticle() == null)){
+                List<Article> articleList = cart.get().getListArticle();
+                return ResponseEntity.ok(articleList);
+            }
+            else return ResponseEntity.ok(Collections.emptyList());
         }
         return null;
     }

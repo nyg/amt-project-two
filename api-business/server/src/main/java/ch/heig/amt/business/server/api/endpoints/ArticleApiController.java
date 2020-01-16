@@ -49,32 +49,29 @@ public class ArticleApiController implements ArticleApi {
         this.request = request;
     }
 
-    public ResponseEntity<Article> articleArticleIDGet(@ApiParam(value = "ID of the article", required = true) @PathVariable("articleID") Integer articleID) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Article>(objectMapper.readValue("{  \"price\" : 6.02745618307040320615897144307382404804229736328125,  \"name\" : \"name\",  \"description\" : \"description\",  \"id\" : 0}", Article.class), HttpStatus.NOT_IMPLEMENTED);
-            }
-            catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Article>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Void> articleDelete(@ApiParam(value = "", required = true) @Valid @RequestBody Article article) {
+    public ResponseEntity<Article> articleArticleIDGet(@ApiParam(value = "ID of the article", required = true) @PathVariable("articleID") Long articleID) {
         DecodedJWT token = accessGranted.granted(request);
         if (token != null) {
 
-            boolean admin = token.getClaim("admin").asBoolean();
-            Optional<ArticleEntity> currentEntity = articleRepository.findById(article.getId());
-            ArticleEntity articleToDelete = currentEntity.get();
+            Optional<ArticleEntity> currentEntity = articleRepository.findById(articleID);
+            ArticleEntity articleEntity = currentEntity.get();
+            Article article = toArticle(articleEntity);
 
-            articleRepository.delete(articleToDelete);
+            return new ResponseEntity<>(article, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return null;
+    }
+    public ResponseEntity<Void> articleArticleIDDelete(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleID") Long articleID) {
+        DecodedJWT token = accessGranted.granted(request);
+        if (token != null) {
+
+            Optional<ArticleEntity> currentEntity = articleRepository.findById(articleID);
+            ArticleEntity articleEntity = currentEntity.get();
+            articleRepository.delete(articleEntity);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return null;
     }
 
     public ResponseEntity<Article> articlePost(@ApiParam(value = "", required = true) @Valid @RequestBody Article article) {
@@ -147,9 +144,19 @@ public class ArticleApiController implements ArticleApi {
     private ArticleEntity toArticleEntity(Article article) {
         ArticleEntity entity = new ArticleEntity();
         entity.setDescription(article.getDescription());
-        entity.setId(article.getId());
+        if(article.getId() != null) {
+            entity.setId(article.getId());
+        }
         entity.setName(article.getName());
         entity.setPrice(article.getPrice());
         return entity;
+    }
+    private Article toArticle(ArticleEntity entity){
+        Article article = new Article();
+        article.setDescription(entity.getDescription());
+        article.setId(entity.getId());
+        article.setName(entity.getName());
+        article.setPrice(article.getPrice());
+        return article;
     }
 }
