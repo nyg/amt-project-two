@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 13, 2020 at 04:22 PM
+-- Generation Time: Jan 17, 2020 at 02:20 PM
 -- Server version: 10.4.11-MariaDB-1:10.4.11+maria~bionic
 -- PHP Version: 7.4.1
 
@@ -21,30 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `business`
 --
+DROP DATABASE IF EXISTS `business`;
 CREATE DATABASE IF NOT EXISTS `business` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `business`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `address`
---
-
-CREATE TABLE `address` (
-  `id` int(11) NOT NULL,
-  `street` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `number` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `address`
---
-
-INSERT INTO `address` (`id`, `street`, `city`, `country`, `number`) VALUES
-(1, 'Close to the beach', 'Miami', 'Floride', 21),
-(2, 'Close to the beach', 'Miami', 'Floride', 23);
 
 -- --------------------------------------------------------
 
@@ -56,7 +35,7 @@ CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` float NOT NULL
+  `price` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -64,10 +43,12 @@ CREATE TABLE `article` (
 --
 
 INSERT INTO `article` (`id`, `name`, `description`, `price`) VALUES
-(1, 'USB Key 16 Go', 'USB QueenPaper 16 Go', 25),
-(2, 'NoisyDiscomfort 53', 'Brand new Bouse Headphone ', 420.69),
+(1, 'USB Key 16 Go', 'USB QueenPaper 16 Go', 15),
+(2, 'NoisyDiscomfort 53', 'Brand new Bouse Headphone ', 421),
 (3, 'BlueTouff Bouse speaker', 'Bluetouff or wirefull speaker from Bouse', 120),
-(4, 'MacLivre Nooby ', 'Brand new device from Mac', 1400);
+(4, 'MacLivre Nooby ', 'Brand new device from Mac', 1400),
+(5, 'USB Key 64 Go', 'USB QueenPaper 64 Go', 40),
+(7, 'USB Key 128 Go', 'USB QueenPaper 64 Go', 60);
 
 -- --------------------------------------------------------
 
@@ -76,8 +57,8 @@ INSERT INTO `article` (`id`, `name`, `description`, `price`) VALUES
 --
 
 CREATE TABLE `cart` (
-  `customerID` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `articleID` int(11) NOT NULL
+  `customer_ID` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `list_article` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -88,28 +69,22 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `customer` (
   `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstname` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lastname` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `addressID` int(11) DEFAULT NULL
+  `first_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`email`, `firstname`, `lastname`, `addressID`) VALUES
-('nikolaos@amt.ch', 'Nikolaos', 'Garanis', 2),
-('samuel@amt.ch', 'Samuel', 'Mettler', 1);
+INSERT INTO `customer` (`email`, `first_name`, `last_name`, `address`) VALUES
+('nikolaos@amt.ch', 'Nikolaos', 'Garanis', 'On the beach 21\r\nFloride\r\nUSA'),
+('samuel@amt.ch', 'Sam', 'Mettler', 'On the beach 23\r\nFloride\r\nUSA');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `address`
---
-ALTER TABLE `address`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `article`
@@ -121,31 +96,24 @@ ALTER TABLE `article`
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD KEY `article_id_fk` (`articleID`),
-  ADD KEY `customer_id_fk` (`customerID`);
+  ADD KEY `article_id_fk` (`list_article`),
+  ADD KEY `customer_id_fk` (`customer_ID`);
 
 --
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`email`),
-  ADD KEY `address_fk` (`addressID`);
+  ADD PRIMARY KEY (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `address`
---
-ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `article`
 --
 ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -155,14 +123,8 @@ ALTER TABLE `article`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `article_id_fk` FOREIGN KEY (`articleID`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `customer_id_fk` FOREIGN KEY (`customerID`) REFERENCES `customer` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `customer`
---
-ALTER TABLE `customer`
-  ADD CONSTRAINT `address_fk` FOREIGN KEY (`addressID`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `article_id_fk` FOREIGN KEY (`list_article`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `customer_id_fk` FOREIGN KEY (`customer_ID`) REFERENCES `customer` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
