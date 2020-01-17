@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5d5913e9-8dda-494f-973a-61dfb5a0ea01",
+		"_postman_id": "5ccb7646-d836-4366-b893-7b85c74521c2",
 		"name": "amt-project-two",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -266,6 +266,363 @@
 						"api",
 						"private",
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Articles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/business/articles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put article into cart",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"name\": \"USB Key 16 Go\",\n        \"price\": 22,\n        \"description\": \"USB QueenPaper 16 Go\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/business/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get article 1 ",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/business/article/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"article",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"USB Key 256 Go\",\n    \"price\": 80,\n    \"description\": \"USB QueenPaper 256 Go\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/business/article",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"article"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Article",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/business/article/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"article",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get customer",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/business/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update customer info",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"samuel@amt.ch\",\n    \"firstName\": \"Sam\",\n    \"lastName\": \"Mettler\",\n    \"address\": \"On the beach 23\\r\\nFloride\\r\\nUSA\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/business/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update article Admin",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"name\": \"USB Key 16 Go\",\n    \"price\": 15,\n    \"description\": \"USB QueenPaper 16 Go\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/business/article",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"article"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get article from cart",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiZW1haWwiOiJzYW11ZWxAYW10LmNoIn0.5ljuZ-NWQcRbkZRvhSdzfrkvSKwy1_j1F0ZmkOEAIxs",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/business/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"business",
+						"cart"
 					]
 				}
 			},

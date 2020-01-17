@@ -104,10 +104,13 @@ public class CartApiController implements CartApi {
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
             CustomerEntity customer = currentEntity.get();
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
-            CartEntity cartEntity = cart.get();
-            if(!(cartEntity.getListArticle() == null)){
-                List<Article> articleList = cart.get().getListArticle();
-                return ResponseEntity.ok(articleList);
+
+            if(cart.isPresent()){
+                CartEntity cartEntity = cart.get();
+                if(!(cartEntity.getListArticle() == null)){
+                    List<Article> articleList = cart.get().getListArticle();
+                        return ResponseEntity.ok(articleList);
+                }
             }
             else return ResponseEntity.ok(Collections.emptyList());
         }
@@ -123,19 +126,31 @@ public class CartApiController implements CartApi {
             CustomerEntity customer = currentEntity.get();
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
 
+            ArrayList<Article> articleArrayList = null;
+            CartEntity cartEntity = null;
             //get current list
-            CartEntity cartEntity = cart.get();
-            ArrayList<Article> articleArrayList = cartEntity.getListArticle();
-            if(articleArrayList == null){
+            if(cart.isPresent()) {
+                cartEntity = cart.get();
+                articleArrayList = cartEntity.getListArticle();
+                if (articleArrayList == null) {
+                    articleArrayList = new ArrayList<Article>();
+                }
+            }
+            else {
                 articleArrayList = new ArrayList<Article>();
+                cartEntity = new CartEntity();
+                cartEntity.setCustomerId(email);
             }
             //update current list
+
             articleArrayList.add(article);
             cartEntity.setListArticle(articleArrayList);
             cartRepository.save(cartEntity);
 
             List<Article> articleList = cartEntity.getListArticle();
             return ResponseEntity.ok(articleList);
+
+
         }
 
         return null;
