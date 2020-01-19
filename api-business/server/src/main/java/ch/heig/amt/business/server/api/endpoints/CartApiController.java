@@ -76,7 +76,7 @@ public class CartApiController implements CartApi {
 
             return new ResponseEntity<Void>(HttpStatus.OK);
         }
-        return null;
+        throw new AuthenticationException();
     }
 
     public ResponseEntity<Void> cartDelete(){
@@ -93,7 +93,7 @@ public class CartApiController implements CartApi {
             cartEntity.setListArticle(new ArrayList<Article>());
             return new ResponseEntity<Void>(HttpStatus.OK);
         }
-        return null;
+        throw new AuthenticationException();
     }
 
     public ResponseEntity<List<Article>> cartGet() {
@@ -109,12 +109,12 @@ public class CartApiController implements CartApi {
                 CartEntity cartEntity = cart.get();
                 if(!(cartEntity.getListArticle() == null)){
                     List<Article> articleList = cart.get().getListArticle();
-                        return ResponseEntity.ok(articleList);
+                    return ResponseEntity.ok(articleList);
                 }
             }
             else return ResponseEntity.ok(Collections.emptyList());
         }
-        return null;
+        throw new AuthenticationException();
     }
 
     public ResponseEntity<List<Article>> cartPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Article article) {
@@ -149,11 +149,9 @@ public class CartApiController implements CartApi {
 
             List<Article> articleList = cartEntity.getListArticle();
             return ResponseEntity.ok(articleList);
-
-
         }
 
-        return null;
+        throw new AuthenticationException();
     }
 
 }

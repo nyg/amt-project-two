@@ -1,6 +1,8 @@
 package ch.heig.amt.business.server.api.endpoints;
 
 import ch.heig.amt.business.server.api.ArticleApi;
+import ch.heig.amt.business.server.api.exceptions.AdminException;
+import ch.heig.amt.business.server.api.exceptions.AuthenticationException;
 import ch.heig.amt.business.server.api.model.Article;
 import ch.heig.amt.business.server.api.model.OptionalArticle;
 import ch.heig.amt.business.server.entities.ArticleEntity;
@@ -59,11 +61,11 @@ public class ArticleApiController implements ArticleApi {
 
             return new ResponseEntity<>(article, HttpStatus.OK);
         }
-        return null;
+        throw new AuthenticationException();
     }
     public ResponseEntity<Void> articleArticleIDDelete(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleID") Long articleID) {
         DecodedJWT token = accessGranted.granted(request);
-        if (token != null) {
+        if (token != null && token.getClaim("admin").asBoolean()) {
 
             Optional<ArticleEntity> currentEntity = articleRepository.findById(articleID);
             ArticleEntity articleEntity = currentEntity.get();
@@ -71,7 +73,7 @@ public class ArticleApiController implements ArticleApi {
 
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return null;
+        throw new AdminException();
     }
 
     public ResponseEntity<Article> articlePost(@ApiParam(value = "", required = true) @Valid @RequestBody Article article) {
@@ -87,7 +89,7 @@ public class ArticleApiController implements ArticleApi {
 
         return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
         DecodedJWT token = accessGranted.granted(request);
-        if (token != null) {
+        if (token != null && token.getClaim("admin").asBoolean()) {
 
             boolean admin = token.getClaim("admin").asBoolean();
             //TODO : if admin not true launch exception
@@ -102,7 +104,7 @@ public class ArticleApiController implements ArticleApi {
             return ResponseEntity.created(location).build();
         }
 
-        return null;
+        throw new AdminException();
     }
 
     public ResponseEntity<Article> articlePut(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalArticle article) {
@@ -118,7 +120,7 @@ public class ArticleApiController implements ArticleApi {
 
         return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
         DecodedJWT token = accessGranted.granted(request);
-        if (token != null) {
+        if (token != null && token.getClaim("admin").asBoolean()) {
 
             boolean admin = token.getClaim("admin").asBoolean();
             //TODO : if admin not true launch exception
@@ -138,7 +140,7 @@ public class ArticleApiController implements ArticleApi {
                 return new ResponseEntity<>(savedArticle, HttpStatus.OK);
             }
         }
-        return null;
+        throw new AdminException();
     }
 
     private ArticleEntity toArticleEntity(Article article) {

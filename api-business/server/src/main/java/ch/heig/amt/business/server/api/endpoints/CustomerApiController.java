@@ -76,7 +76,7 @@ public class CustomerApiController implements CustomerApi {
                     .lastName(customer.getLastName());
             return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
         }
-        return null;
+        throw new AuthenticationException();
     }
 
     public ResponseEntity<Customer> customerPut(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalCustomer customer) {
@@ -115,6 +115,6 @@ public class CustomerApiController implements CustomerApi {
                 throw new CustomerNotFoundException();
             }
         }
-        return null;
+        throw new AuthenticationException();
     }
 }
