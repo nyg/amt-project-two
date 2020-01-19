@@ -27,7 +27,25 @@ This API has two public endoints and a private one.
 
 ### Business API
 
-TODO
+This API has 1 public endpoint and 10 private one
+
+1. `/api/business/articles` which allows everyone to browse the complete list of articles available. (Public) (GET)
+2. `/api/business/article` allows an admin to create an article. Must provide all information. (POST)
+3. `/api/business/article` allows an admin to edit an article. (PUT)
+4. `/api/business/article/{articleID}` allows a user to get info on article by specifying its id. (GET)
+5. `/api/business/article/{articleID}` allows an admin to delete an item from the shop. (DELETE)
+6. `/api/business/customer` allows a user (or admin) to get his information. (GET)
+7. `/api/business/customer` allows a user (or admin) to change his information except email that won't be change. (PUT) 
+8. `/api/business/cart` allows a user to get the content of his cart. (GET)
+9. `/api/business/cart` allows a user to update articles in his cart.  Need to add in the body the article desired. (PUT)
+10. `/api/business/cart` allows a user to delete all articles from his cart. (DELETE)
+11. `/api/business/cart/{articleID}` allows a user to deleted a specified item from his cart specifiying its id. (DELETE)
+
+
+#### Known issue 
+
+There is a problem on the /cart because of the @OneToMany annotations that couldn't have been implemented, therefore if you haven't an empty cart, doing a GET on this endpoint will result in a crash.
+The code is here but not functionnal.
 
 ## Running the project
 

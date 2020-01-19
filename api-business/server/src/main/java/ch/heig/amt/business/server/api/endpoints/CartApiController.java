@@ -57,6 +57,7 @@ public class CartApiController implements CartApi {
 
 
     public ResponseEntity<Void> cartArticleIDDelete(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleID") Integer articleID) {
+
         DecodedJWT token = accessGranted.granted(request);
         if(token != null){
 

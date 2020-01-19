@@ -83,7 +83,7 @@ public class CustomerApiController implements CustomerApi {
         DecodedJWT token = accessGranted.granted(request);
         if (token != null) {  //si le customer est bien identifié
 
-            Optional<CustomerEntity> currentEntity = customerRepository.findById(customer.getEmail());
+            Optional<CustomerEntity> currentEntity = customerRepository.findById(token.getClaim("email").asString());
 
 
             if (currentEntity.isPresent()) {

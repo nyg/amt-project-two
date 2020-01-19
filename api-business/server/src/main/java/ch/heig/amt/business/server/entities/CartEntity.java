@@ -16,5 +16,6 @@ public class CartEntity implements Serializable {
 
     @Id
     private String customerId;
+
     private ArrayList<Article> listArticle;
 }
