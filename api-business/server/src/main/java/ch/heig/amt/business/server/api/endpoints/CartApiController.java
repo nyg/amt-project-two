@@ -9,6 +9,7 @@ import ch.heig.amt.business.server.repositories.CartRepository;
 import ch.heig.amt.business.server.repositories.CustomerRepository;
 import ch.heig.amt.business.server.service.AccessGranted;
 import ch.heig.amt.business.server.service.AuthenticationService;
+import ch.heig.amt.business.server.service.NewUserService;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -39,6 +40,8 @@ public class CartApiController implements CartApi {
     CustomerRepository customerRepository;
     @Autowired
     CartRepository cartRepository;
+    @Autowired
+    NewUserService newUserService;
 
     private static final Logger log = LoggerFactory.getLogger(CartApiController.class);
 
@@ -59,6 +62,11 @@ public class CartApiController implements CartApi {
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
+            //if user doesn't exist in DB we insert him
+            if(!currentEntity.isPresent()){
+                newUserService.CreateNewUser(email);
+                currentEntity = customerRepository.findById(email);
+            }
             CustomerEntity customer = currentEntity.get();
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
 
@@ -85,6 +93,11 @@ public class CartApiController implements CartApi {
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
+            //if user doesn't exist in DB we insert him
+            if(!currentEntity.isPresent()){
+                newUserService.CreateNewUser(email);
+                currentEntity = customerRepository.findById(email);
+            }
             CustomerEntity customer = currentEntity.get();
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
 
@@ -100,8 +113,14 @@ public class CartApiController implements CartApi {
         DecodedJWT token = accessGranted.granted(request);
         if(token != null){
 
+
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
+            //if user doesn't exist in DB we insert him
+            if(!currentEntity.isPresent()){
+                newUserService.CreateNewUser(email);
+                currentEntity = customerRepository.findById(email);
+            }
             CustomerEntity customer = currentEntity.get();
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
 
@@ -123,7 +142,14 @@ public class CartApiController implements CartApi {
 
             String email = token.getClaim("email").asString();
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
+            //if user doesn't exist in DB we insert him
+            if(!currentEntity.isPresent()){
+                newUserService.CreateNewUser(email);
+                currentEntity = customerRepository.findById(email);
+            }
+
             CustomerEntity customer = currentEntity.get();
+
             Optional<CartEntity> cart = cartRepository.findById(customer.getEmail());
 
             ArrayList<Article> articleArrayList = null;

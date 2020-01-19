@@ -6,6 +6,7 @@ import ch.heig.amt.business.server.api.model.Customer;
 import ch.heig.amt.business.server.api.model.OptionalCustomer;
 import ch.heig.amt.business.server.entities.CustomerEntity;
 import ch.heig.amt.business.server.repositories.CustomerRepository;
+import ch.heig.amt.business.server.service.NewUserService;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import ch.heig.amt.business.server.api.CustomerApi;
 
@@ -39,6 +40,9 @@ public class CustomerApiController implements CustomerApi {
     @Autowired
     AuthenticationService authenticationService;
 
+    @Autowired
+    NewUserService newUserService;
+
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
@@ -50,23 +54,18 @@ public class CustomerApiController implements CustomerApi {
     }
 
     public ResponseEntity<Customer> customerGet() {
-        /*
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Customer>>(objectMapper.readValue("[ {  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"address\" : {    \"ZIP\" : 6,    \"number\" : 0,    \"country\" : \"country\",    \"city\" : \"city\",    \"street\" : \"street\"  },  \"email\" : \"email\"}, {  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"address\" : {    \"ZIP\" : 6,    \"number\" : 0,    \"country\" : \"country\",    \"city\" : \"city\",    \"street\" : \"street\"  },  \"email\" : \"email\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Customer>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }*/
+
         DecodedJWT token = accessGranted.granted(request);
         if (token != null) {
 
             String email = token.getClaim("email").asString();
 
             Optional<CustomerEntity> currentEntity = customerRepository.findById(email);
-
+            //if user doesn't exist in DB we insert him
+            if(!currentEntity.isPresent()){
+                newUserService.CreateNewUser(email);
+                currentEntity = customerRepository.findById(email);
+            }
 
             CustomerEntity customer = currentEntity.get();
             Customer savedCustomer = new Customer()
@@ -80,22 +79,13 @@ public class CustomerApiController implements CustomerApi {
     }
 
     public ResponseEntity<Customer> customerPut(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalCustomer customer) {
-        /*String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Customer>(objectMapper.readValue("{  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"address\" : {    \"ZIP\" : 6,    \"number\" : 0,    \"country\" : \"country\",    \"city\" : \"city\",    \"street\" : \"street\"  },  \"email\" : \"email\"}", Customer.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Customer>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
-        */
         DecodedJWT token = accessGranted.granted(request);
         if (token != null) {  //si le customer est bien identifié
 
             Optional<CustomerEntity> currentEntity = customerRepository.findById(customer.getEmail());
+
+
             if (currentEntity.isPresent()) {
                 CustomerEntity customerEntity = currentEntity.get();
                 customerEntity.setLastName(customer.getLastName());

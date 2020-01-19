@@ -77,17 +77,7 @@ public class ArticleApiController implements ArticleApi {
     }
 
     public ResponseEntity<Article> articlePost(@ApiParam(value = "", required = true) @Valid @RequestBody Article article) {
-       /* String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Article>(objectMapper.readValue("{  \"price\" : 6.02745618307040320615897144307382404804229736328125,  \"name\" : \"name\",  \"description\" : \"description\",  \"id\" : 0}", Article.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Article>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
         DecodedJWT token = accessGranted.granted(request);
         if (token != null && token.getClaim("admin").asBoolean()) {
 
@@ -108,22 +98,13 @@ public class ArticleApiController implements ArticleApi {
     }
 
     public ResponseEntity<Article> articlePut(@ApiParam(value = "", required = true) @Valid @RequestBody OptionalArticle article) {
-        /*String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Article>(objectMapper.readValue("{  \"price\" : 6.02745618307040320615897144307382404804229736328125,  \"name\" : \"name\",  \"description\" : \"description\",  \"id\" : 0}", Article.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Article>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);*/
         DecodedJWT token = accessGranted.granted(request);
         if (token != null && token.getClaim("admin").asBoolean()) {
 
             boolean admin = token.getClaim("admin").asBoolean();
             //TODO : if admin not true launch exception
+
 
             Optional<ArticleEntity> currentEntity = articleRepository.findById(article.getId());
             if (currentEntity.isPresent()) {
